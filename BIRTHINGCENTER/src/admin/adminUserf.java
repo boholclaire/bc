@@ -27,7 +27,7 @@ public class adminUserf extends javax.swing.JFrame {
  public void displayData() {
     dbConnect dbc = new dbConnect();
     try {
-        String query = "SELECT u_fname, u_lname, u_username, "
+        String query = "SELECT u_id, u_fname, u_lname, u_username, "
                      + "u_email, u_phoneNumber, u_type, u_status FROM tbl_user";
         
         ResultSet rs = dbc.getData(query);
@@ -53,10 +53,11 @@ public class adminUserf extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         accounttble = new javax.swing.JTable();
         edit = new javax.swing.JPanel();
-        EDIT = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         add = new javax.swing.JLabel();
         border = new javax.swing.JLabel();
+        EDIT = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -123,33 +124,26 @@ public class adminUserf extends javax.swing.JFrame {
             }
         });
 
-        EDIT.setBackground(new java.awt.Color(235, 230, 240));
-        EDIT.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        EDIT.setForeground(new java.awt.Color(102, 102, 102));
-        EDIT.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        EDIT.setText("EDIT");
-        EDIT.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                EDITMouseClicked(evt);
-            }
-        });
-
         javax.swing.GroupLayout editLayout = new javax.swing.GroupLayout(edit);
         edit.setLayout(editLayout);
         editLayout.setHorizontalGroup(
             editLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(editLayout.createSequentialGroup()
-                .addComponent(EDIT, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 12, Short.MAX_VALUE))
+            .addGap(0, 80, Short.MAX_VALUE)
         );
         editLayout.setVerticalGroup(
             editLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, editLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(EDIT, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGap(0, 30, Short.MAX_VALUE)
         );
 
         jPanel1.add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 110, 80, 30));
+
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 100, -1, -1));
 
         add.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         add.setForeground(new java.awt.Color(102, 102, 102));
@@ -178,7 +172,19 @@ public class adminUserf extends javax.swing.JFrame {
         border.setForeground(new java.awt.Color(102, 102, 102));
         border.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         border.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), "ADMIN DASHBOARD", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("SansSerif", 1, 24), new java.awt.Color(102, 102, 102))); // NOI18N
-        jPanel1.add(border, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, 500, 390));
+        jPanel1.add(border, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 30, 500, 390));
+
+        EDIT.setBackground(new java.awt.Color(235, 230, 240));
+        EDIT.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        EDIT.setForeground(new java.awt.Color(102, 102, 102));
+        EDIT.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        EDIT.setText("EDIT");
+        EDIT.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                EDITMouseClicked(evt);
+            }
+        });
+        jPanel1.add(EDIT, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 90, 75, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -204,40 +210,7 @@ public class adminUserf extends javax.swing.JFrame {
     }//GEN-LAST:event_backActionPerformed
 
     private void EDITMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EDITMouseClicked
-           int rowIndex = accounttble.getSelectedRow();
-if (rowIndex < 0) {
-    JOptionPane.showMessageDialog(null, "Please select an Item!");
-} else {
-    try {
-        dbConnect dbc = new dbConnect();
-        TableModel tbl = accounttble.getModel();
-        
-     
-        String query = "SELECT * FROM tbl_user WHERE u_id = '" + tbl.getValueAt(rowIndex, 0) + "'";
-        ResultSet rs = dbc.getData(query);
-        
-        if (rs.next()) {
-            createUserf crf = new createUserf();
-            
-            crf.ID.setText(""+rs.getInt("u_id"));
-            crf.fn.setText(""+rs.getString("u_fname")); 
-            crf.ln.setText(""+rs.getString("u_lname")); 
-            crf.em.setText(""+rs.getString("u_email")); 
-            crf.pnr.setText(""+rs.getString("u_phoneNumber")); 
-            crf.ty.setSelectedItem(""+rs.getString("u_ty")); 
-            crf.usn.setText(""+rs.getString("u_username")); 
-            crf.pwd.setText(""+rs.getString("u_password1")); 
-            crf.us.setSelectedItem(""+rs.getString("u_status")); 
-            crf.add.setEnabled(false);
-             crf.update.setEnabled(true);
-            crf.setVisible(true);
-            this.dispose();
-        }
-    } catch (SQLException ex) {
-        System.out.println("SQL Exception: " + ex.getMessage()); 
-    }
-}
-
+           
 
     }//GEN-LAST:event_EDITMouseClicked
 
@@ -252,9 +225,78 @@ if (rowIndex < 0) {
         acc_id.setText(""+sess.getID());    }//GEN-LAST:event_formWindowActivated
 
     private void editMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseClicked
+        int rowIndex = accounttble.getSelectedRow();
+        if (rowIndex < 0) {
+            JOptionPane.showMessageDialog(null, "Please select an Item!");
+        } else {
+            try {
+                dbConnect dbc = new dbConnect();
+                TableModel tbl = accounttble.getModel();
+
+
+                String query = "SELECT * FROM tbl_user WHERE u_id = '" + tbl.getValueAt(rowIndex, 0) + "'";
+                ResultSet rs = dbc.getData(query);
+
+                if (rs.next()) {
+                    createUserf crf = new createUserf();
+
+                    crf.ID.setText(""+rs.getInt("u_id"));
+                    crf.fn.setText(""+rs.getString("u_fname")); 
+                    crf.ln.setText(""+rs.getString("u_lname")); 
+                    crf.em.setText(""+rs.getString("u_email")); 
+                    crf.pnr.setText(""+rs.getString("u_phoneNumber")); 
+                    crf.ty.setSelectedItem(""+rs.getString("u_type")); 
+                    crf.usn.setText(""+rs.getString("u_username")); 
+                    crf.pwd.setText(""+rs.getString("u_password1")); 
+                    crf.us.setSelectedItem(""+rs.getString("u_status")); 
+                    crf.add.setEnabled(false);
+                     crf.update.setEnabled(true);
+                    crf.setVisible(true);
+                    this.dispose();
+                }
+            } catch (SQLException ex) {
+                System.out.println("SQL Exception: " + ex.getMessage()); 
+            }
+        }
   
 
     }//GEN-LAST:event_editMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       int rowIndex = accounttble.getSelectedRow();
+        if (rowIndex < 0) {
+            JOptionPane.showMessageDialog(null, "Please select an Item!");
+        } else {
+            try {
+                dbConnect dbc = new dbConnect();
+                TableModel tbl = accounttble.getModel();
+
+
+                String query = "SELECT * FROM tbl_user WHERE u_id = '" +tbl.getValueAt(rowIndex, 0)+ "'";
+                ResultSet rs = dbc.getData(query);
+                System.out.println(""+tbl.getValueAt(rowIndex, 0));
+                if (rs.next()) {
+                    createUserf crf = new createUserf();
+
+                    crf.ID.setText(""+rs.getInt("u_id"));
+                    crf.fn.setText(""+rs.getString("u_fname")); 
+                    crf.ln.setText(""+rs.getString("u_lname")); 
+                    crf.em.setText(""+rs.getString("u_email")); 
+                    crf.pnr.setText(""+rs.getString("u_phoneNumber")); 
+                    crf.ty.setSelectedItem(""+rs.getString("u_type")); 
+                    crf.usn.setText(""+rs.getString("u_username")); 
+                    crf.pwd.setText(""+rs.getString("u_password")); 
+                    crf.us.setSelectedItem(""+rs.getString("u_status")); 
+                    crf.add.setEnabled(false);
+                     crf.update.setEnabled(true);
+                    crf.setVisible(true);
+                    this.dispose();
+                }
+            } catch (SQLException ex) {
+                System.out.println("SQL Exception: " + ex.getMessage()); 
+            }
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -299,6 +341,7 @@ if (rowIndex < 0) {
     private javax.swing.JButton back;
     private javax.swing.JLabel border;
     private javax.swing.JPanel edit;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
