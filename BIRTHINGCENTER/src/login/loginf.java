@@ -204,7 +204,7 @@ public class loginf extends javax.swing.JFrame {
             ManagerDashboard md = new ManagerDashboard();
             md.setVisible(true);
             this.dispose();
-        } else if (type.equalsIgnoreCase("Worker")) {  
+        } else if (type.equalsIgnoreCase("Nurse")) {  
             NurseDashboard nd = new NurseDashboard();
             nd.setVisible(true);
             this.dispose();

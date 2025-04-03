@@ -204,18 +204,21 @@ public class adminUserf extends javax.swing.JFrame {
     }//GEN-LAST:event_backActionPerformed
 
     private void EDITMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EDITMouseClicked
-        int rowIndex = accounttble.getSelectedRow();
-     if (rowIndex < 0) {
-       JOptionPane.showMessageDialog(null, "Please select an Item!");
-     } else {
+           int rowIndex = accounttble.getSelectedRow();
+if (rowIndex < 0) {
+    JOptionPane.showMessageDialog(null, "Please select an Item!");
+} else {
     try {
         dbConnect dbc = new dbConnect();
         TableModel tbl = accounttble.getModel();
-       
+        
+     
         String query = "SELECT * FROM tbl_user WHERE u_id = '" + tbl.getValueAt(rowIndex, 0) + "'";
         ResultSet rs = dbc.getData(query);
-          if (rs.next()) {
+        
+        if (rs.next()) {
             createUserf crf = new createUserf();
+            
             crf.ID.setText(""+rs.getInt("u_id"));
             crf.fn.setText(""+rs.getString("u_fname")); 
             crf.ln.setText(""+rs.getString("u_lname")); 
@@ -226,7 +229,7 @@ public class adminUserf extends javax.swing.JFrame {
             crf.pwd.setText(""+rs.getString("u_password1")); 
             crf.us.setSelectedItem(""+rs.getString("u_status")); 
             crf.add.setEnabled(false);
-            crf.update.setEnabled(true);
+             crf.update.setEnabled(true);
             crf.setVisible(true);
             this.dispose();
         }
@@ -234,6 +237,7 @@ public class adminUserf extends javax.swing.JFrame {
         System.out.println("SQL Exception: " + ex.getMessage()); 
     }
 }
+
 
     }//GEN-LAST:event_EDITMouseClicked
 
