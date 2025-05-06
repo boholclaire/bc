@@ -58,7 +58,7 @@
         <Component class="javax.swing.JLabel" name="jLabel6">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/icon/icons8-hide-24.png"/>
+              <Image iconType="3" name="/icon/icons8-hide-password-24.png"/>
             </Property>
           </Properties>
           <Events>
@@ -120,7 +120,7 @@
         <Component class="javax.swing.JLabel" name="jLabel7">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/icon/icons8-hide-24.png"/>
+              <Image iconType="3" name="/icon/icons8-hide-password-24.png"/>
             </Property>
           </Properties>
           <Events>
@@ -165,7 +165,7 @@
         <Component class="javax.swing.JLabel" name="jLabel8">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/icon/icons8-hide-24.png"/>
+              <Image iconType="3" name="/icon/icons8-hide-password-24.png"/>
             </Property>
           </Properties>
           <Events>

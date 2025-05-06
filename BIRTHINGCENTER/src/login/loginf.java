@@ -12,9 +12,12 @@ import config.dbConnect;
 import config.passwordHasher;
 import static config.passwordHasher.hashPassword;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.Date;
 import static javax.management.remote.JMXConnectorFactory.connect;
 import javax.swing.JOptionPane;
 
@@ -72,6 +75,45 @@ public class loginf extends javax.swing.JFrame {
         ex.printStackTrace();
     }  return false;
 }
+      
+      
+      public void logEvent(int userId, String username, String action) 
+    {
+        dbConnect dbc = new dbConnect();
+        Connection con = dbc.getConnection();
+        PreparedStatement pstmt = null;
+        Timestamp time = new Timestamp(new Date().getTime());
+
+        try 
+        {    
+            String sql = "INSERT INTO tbl_logs (u_id, u_username, action_time, log_action) "
+                                     + "VALUES ('" + userId + "', '" + username + "', '" + time + "', '" + action + "')";
+            System.out.println("userId: "+userId);
+            pstmt = con.prepareStatement(sql);
+
+            /*            pstmt.setInt(1, userId);
+            pstmt.setString(2, username);
+            pstmt.setTimestamp(3, new Timestamp(new Date().getTime()));
+            pstmt.setString(4, userType);*/
+
+            pstmt.executeUpdate();
+            System.out.println("Login log recorded successfully.");
+        } catch (SQLException e) 
+        {
+            JOptionPane.showMessageDialog(null, "Error recording log: " + e.getMessage());
+        } finally 
+        {
+            try 
+            {
+                if (pstmt != null) pstmt.close();
+                if (con != null) con.close();
+            } catch (SQLException e) 
+            {
+                JOptionPane.showMessageDialog(null, "Error closing resources: " + e.getMessage());
+            }
+        }
+    }
+
       @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -82,6 +124,7 @@ public class loginf extends javax.swing.JFrame {
         login = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         pass = new javax.swing.JPasswordField();
+        jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -113,19 +156,19 @@ public class loginf extends javax.swing.JFrame {
                 loginActionPerformed(evt);
             }
         });
-        jPanel2.add(login, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 280, 90, 30));
+        jPanel2.add(login, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 300, 90, 30));
 
         jLabel5.setBackground(new java.awt.Color(230, 189, 230));
         jLabel5.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(102, 102, 102));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8-hide-24.png"))); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8-hide-password-24.png"))); // NOI18N
         jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel5MouseClicked(evt);
             }
         });
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 230, -1, 20));
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 220, -1, 40));
 
         pass.setBackground(new java.awt.Color(230, 189, 230));
         pass.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
@@ -138,6 +181,16 @@ public class loginf extends javax.swing.JFrame {
             }
         });
         jPanel2.add(pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 280, 50));
+
+        jLabel4.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel4.setText("Forgot Password? click here");
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
+        });
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 270, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(102, 102, 102));
@@ -225,6 +278,12 @@ public class loginf extends javax.swing.JFrame {
     }
     }//GEN-LAST:event_jLabel5MouseClicked
 
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+    ForgetPass efp = new ForgetPass();
+    efp.setVisible(true);
+    this.dispose();
+    }//GEN-LAST:event_jLabel4MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -264,6 +323,7 @@ public class loginf extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
